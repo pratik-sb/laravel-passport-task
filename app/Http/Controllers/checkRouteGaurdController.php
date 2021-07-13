@@ -14,4 +14,13 @@ class checkRouteGaurdController extends Controller
     public function check(){
         return response(['message'=>'Token in valid!']);
     }
+
+    public function scopecheck(Request $req){
+        if ($req->user()->tokenCan('get-admin')) {
+            return response(['message'=>'SUCCESS! Admin Data!!']);
+        }else{
+            return response(['message'=>'Failed! You Dont have access to this!']);
+        }
+        
+    }
 }

@@ -33,6 +33,10 @@ Route::post('/resend', [verificationController::class, 'resend'])->name('verific
 Route::post('/forgot', [forgotPasswordController::class, 'forgot']);
 Route::post('/reset', [forgotPasswordController::class, 'reset']);
 
+
+Route::post('/adminlogin', [AuthContoller::class, 'adminlogin']); //For admin Login
 Route::middleware('auth:api')->group(function() {
-    Route::post('/check', [checkRouteGaurdController::class, 'check']);
+    Route::post('/check', [checkRouteGaurdController::class, 'check']); // Working as Gaurd Route
+    Route::post('/admincheck', [checkRouteGaurdController::class, 'scopecheck']); //For Scope
 });
+

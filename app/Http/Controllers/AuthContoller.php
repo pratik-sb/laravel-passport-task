@@ -34,4 +34,17 @@ class AuthContoller extends Controller
         $accessToken = auth()->user()->createToken('authtoken')->accessToken;
         return response(['user'=> auth()->user(), 'access_token'=>$accessToken]);    
     }
+
+    public function adminlogin(Request $req){
+        $loginData = $req->validate([
+            'email'=>'email|required',
+            'password'=>'required'
+        ]);
+
+        if(!auth()->attempt($loginData)){
+            return response(['message'=>'Invalid Credentials']);
+        }
+        $accessToken = auth()->user()->createToken('authtoken', ['get-admin'])->accessToken;
+        return response(['user'=> auth()->user(), 'access_token'=>$accessToken]);    
+    }
 }

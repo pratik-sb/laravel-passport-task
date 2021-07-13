@@ -28,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
         
         Passport::routes();
 
-        //
+        Passport::tokensCan([
+            'get-admin' => 'To Get Admin Details only to Admin',
+        ]);
     }
 }
