@@ -9,7 +9,7 @@ class checkRouteGaurdController extends Controller
     // public function __construct()
     // {
     //     $this->middleware('auth');
-    // }
+    // }//
 
     public function check(){
         return response(['message'=>'Token in valid!']);
