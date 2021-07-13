@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthContoller;
 use App\Http\Controllers\verificationController;
 use App\Http\Controllers\forgotPasswordController;
+use App\Http\Controllers\checkRouteGaurdController;
 
 
 /*
@@ -32,3 +33,6 @@ Route::post('/resend', [verificationController::class, 'resend'])->name('verific
 Route::post('/forgot', [forgotPasswordController::class, 'forgot']);
 Route::post('/reset', [forgotPasswordController::class, 'reset']);
 
+Route::middleware('auth:api')->group(function() {
+    Route::post('/check', [checkRouteGaurdController::class, 'check']);
+});
