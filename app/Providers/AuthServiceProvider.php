@@ -30,6 +30,8 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::tokensCan([
             'get-admin' => 'To Get Admin Details only to Admin',
+            'get-business' => 'To Get Business Details only to Business User',
+            'get-user' => 'To Get user Details only to Normal user',
         ]);
     }
 }

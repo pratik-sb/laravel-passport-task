@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthContoller;
 use App\Http\Controllers\verificationController;
+use App\Http\Controllers\CustomEmailVerification;
 use App\Http\Controllers\forgotPasswordController;
 use App\Http\Controllers\checkRouteGaurdController;
 
@@ -34,9 +35,11 @@ Route::post('/forgot', [forgotPasswordController::class, 'forgot']);
 Route::post('/reset', [forgotPasswordController::class, 'reset']);
 
 
-Route::post('/adminlogin', [AuthContoller::class, 'adminlogin']); //For admin Login
-Route::middleware('auth:api')->group(function() {
-    Route::post('/check', [checkRouteGaurdController::class, 'check']); // Working as Gaurd Route
+//Route::post('/adminlogin', [AuthContoller::class, 'adminlogin']); //For admin Login
+Route::middleware('auth:api')->group(function() { // Working as Gaurd Group Route
+    Route::post('/check', [checkRouteGaurdController::class, 'check']); 
     Route::post('/admincheck', [checkRouteGaurdController::class, 'scopecheck']); //For Scope
 });
 
+Route::post('/sendcustomverify', [CustomEmailVerification::class, 'sendemail']);
+Route::get('/customemailverify/{token}', [CustomEmailVerification::class, 'verifyemail']);

@@ -31,20 +31,29 @@ class AuthContoller extends Controller
         if(!auth()->attempt($loginData)){
             return response(['message'=>'Invalid Credentials']);
         }
-        $accessToken = auth()->user()->createToken('authtoken')->accessToken;
-        return response(['user'=> auth()->user(), 'access_token'=>$accessToken]);    
-    }
-
-    public function adminlogin(Request $req){
-        $loginData = $req->validate([
-            'email'=>'email|required',
-            'password'=>'required'
-        ]);
-
-        if(!auth()->attempt($loginData)){
-            return response(['message'=>'Invalid Credentials']);
+        if(auth()->user()->user_type === 'USR'){
+            $accessToken = auth()->user()->createToken('authtoken', ['get-user'])->accessToken;
+            return response(['user'=> auth()->user(),'user type'=>'Normal', 'access_token'=>$accessToken]);
+        }elseif (auth()->user()->user_type === 'BUS') {
+            $accessToken = auth()->user()->createToken('authtoken', ['get-business'])->accessToken;
+            return response(['user'=> auth()->user(),'user type'=>'Business', 'access_token'=>$accessToken]);
+        }elseif (auth()->user()->user_type === 'ADM') {
+            $accessToken = auth()->user()->createToken('authtoken', ['get-admin'])->accessToken;
+            return response(['user'=> auth()->user(),'user type'=>'Admin', 'access_token'=>$accessToken]);
         }
-        $accessToken = auth()->user()->createToken('authtoken', ['get-admin'])->accessToken;
-        return response(['user'=> auth()->user(), 'access_token'=>$accessToken]);    
+            
     }
+
+    // public function adminlogin(Request $req){
+    //     $loginData = $req->validate([
+    //         'email'=>'email|required',
+    //         'password'=>'required'
+    //     ]);
+
+    //     if(!auth()->attempt($loginData)){
+    //         return response(['message'=>'Invalid Credentials']);
+    //     }
+    //     $accessToken = auth()->user()->createToken('authtoken', ['get-admin'])->accessToken;
+    //     return response(['user'=> auth()->user(), 'access_token'=>$accessToken]);    
+    // }
 }
